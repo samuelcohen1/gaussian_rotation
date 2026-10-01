@@ -2,7 +2,7 @@
 #SBATCH --job-name=diff-invert
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=1
 #SBATCH --mem=32gb
 #SBATCH --time=02:00:00
 # The old "gpu" partition was removed. hpg-turin is the L4 partition (24 GB).
@@ -33,6 +33,8 @@ mkdir -p results
 
 export HF_HUB_CACHE="${SLURM_SUBMIT_DIR}/.cache/huggingface/hub"
 export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
 
 if [ ! -x .conda-env/bin/python ]; then
   echo "ERROR: .conda-env is missing. Create it on a compute node with:" >&2
