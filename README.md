@@ -20,12 +20,10 @@ git pull
 
 ### 2. Environment (first time, or if Diffusers is not installed yet)
 
-Run this on a compute node, not the login node. The job uses the project env at `.conda-env`.
+Do this on a compute node by submitting a job. Do not install packages on the login node. The experiment uses `.conda-env`.
 
 ```bash
-module load conda
-source "$(conda info --base)/etc/profile.d/conda.sh"
-conda env update -p .conda-env -f environment.yml || conda env create -p .conda-env -f environment.yml
+sbatch scripts/setup_env.slurm
 ```
 
 ### 3. Submit the experiment

@@ -13,6 +13,7 @@ so index 0 is the fully noised latent. Only that tensor is saved.
 from __future__ import annotations
 
 import argparse
+import gc
 import json
 import subprocess
 from pathlib import Path
@@ -113,17 +114,29 @@ def _sample_latent(pipe: StableDiffusionPipeline, seed: int, height: int, width:
     return latent.to(dtype=dtype)
 
 
-def _load_pipelines(model_id: str, dtype: torch.dtype, device: str):
-    kwargs = {"torch_dtype": dtype, "safety_checker": None, "use_safetensors": True}
-    pipe = StableDiffusionPipeline.from_pretrained(model_id, **kwargs)
-    pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
-    pipe = pipe.to(device)
+def _pretrained_kwargs(dtype: torch.dtype) -> dict:
+    return {"torch_dtype": dtype, "safety_checker": None, "use_safetensors": True}
 
-    inverse = StableDiffusionDiffEditPipeline.from_pretrained(model_id, **kwargs)
+
+def _load_generation_pipeline(model_id: str, dtype: torch.dtype, device: str) -> StableDiffusionPipeline:
+    pipe = StableDiffusionPipeline.from_pretrained(model_id, **_pretrained_kwargs(dtype))
+    pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
+    return pipe.to(device)
+
+
+def _load_inversion_pipeline(model_id: str, dtype: torch.dtype, device: str) -> StableDiffusionDiffEditPipeline:
+    # Loaded only after generation is freed. Two copies at once do not fit a small QOS memory cap.
+    inverse = StableDiffusionDiffEditPipeline.from_pretrained(model_id, **_pretrained_kwargs(dtype))
     inverse.scheduler = DDIMScheduler.from_config(inverse.scheduler.config)
     inverse.inverse_scheduler = DDIMInverseScheduler.from_config(inverse.scheduler.config)
-    inverse = inverse.to(device)
-    return pipe, inverse
+    return inverse.to(device)
+
+
+def _release_pipeline(pipe) -> None:
+    del pipe
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
 
 def _recovered_latent(stacked: torch.Tensor, original_shape: torch.Size) -> torch.Tensor:
@@ -215,10 +228,11 @@ def main(argv: list[str] | None = None) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     torch.manual_seed(args.seed)
-    pipe, inverse = _load_pipelines(args.model_id, args.dtype, args.device)
-    if pipe.scheduler.init_noise_sigma != 1.0:
+    pipe = _load_generation_pipeline(args.model_id, args.dtype, args.device)
+    init_noise_sigma = float(pipe.scheduler.init_noise_sigma)
+    if init_noise_sigma != 1.0:
         raise SystemExit(
-            f"DDIM init_noise_sigma is {pipe.scheduler.init_noise_sigma}, not 1. "
+            f"DDIM init_noise_sigma is {init_noise_sigma}, not 1. "
             "Refusing to run because the pipeline would rescale the supplied Gaussian."
         )
 
@@ -235,7 +249,9 @@ def main(argv: list[str] | None = None) -> None:
     if len(images) != 1:
         raise SystemExit(f"pipeline returned {len(images)} images, expected 1")
     image = images[0]
+    _release_pipeline(pipe)
 
+    inverse = _load_inversion_pipeline(args.model_id, args.dtype, args.device)
     inverted = inverse.invert(
         prompt=args.prompt,
         image=image,
@@ -278,7 +294,7 @@ def main(argv: list[str] | None = None) -> None:
         "num_inference_steps": args.num_inference_steps,
         "guidance_scale": args.guidance_scale,
         "inversion_strength": args.inversion_strength,
-        "init_noise_sigma": float(pipe.scheduler.init_noise_sigma),
+        "init_noise_sigma": init_noise_sigma,
         "latent_shape": list(z0_cpu.shape),
     }
     metadata_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")

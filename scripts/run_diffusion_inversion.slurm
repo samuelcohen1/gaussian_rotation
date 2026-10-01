@@ -3,7 +3,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=32gb
+# 32gb was rejected with QOSMaxMemoryPerUser on the eel5840 QOS.
+#SBATCH --mem=8gb
 #SBATCH --time=02:00:00
 # The old "gpu" partition was removed. hpg-turin is the L4 partition (24 GB).
 #SBATCH --partition=hpg-turin
@@ -37,17 +38,14 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 
 if [ ! -x .conda-env/bin/python ]; then
-  echo "ERROR: .conda-env is missing. Create it on a compute node with:" >&2
-  echo "  module load conda && source \"\$(conda info --base)/etc/profile.d/conda.sh\"" >&2
-  echo "  conda env create -p .conda-env -f environment.yml" >&2
+  echo "ERROR: .conda-env is missing. Do not install on the login node." >&2
+  echo "  sbatch scripts/setup_env.slurm" >&2
   exit 1
 fi
 
 if ! .conda-env/bin/python -c "import torch, diffusers, PIL" >/dev/null 2>&1; then
   echo "ERROR: .conda-env cannot import torch, diffusers, and PIL." >&2
-  echo "Update it on a compute node with:" >&2
-  echo "  module load conda && source \"\$(conda info --base)/etc/profile.d/conda.sh\"" >&2
-  echo "  conda env update -p .conda-env -f environment.yml" >&2
+  echo "  sbatch scripts/setup_env.slurm" >&2
   exit 1
 fi
 
