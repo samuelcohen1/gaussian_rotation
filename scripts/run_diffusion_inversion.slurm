@@ -5,7 +5,8 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32gb
 #SBATCH --time=02:00:00
-#SBATCH --partition=gpu
+# The old "gpu" partition was removed. hpg-turin is the L4 partition (24 GB).
+#SBATCH --partition=hpg-turin
 #SBATCH --gpus=1
 #SBATCH --account=eel5840
 #SBATCH --qos=eel5840
