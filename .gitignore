@@ -1,0 +1,20 @@
+# Local environments
+.venv/
+venv/
+.conda-env/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local secrets
+hpg.local.env
+.env
+
+# Slurm logs and diffusion-job outputs. Tracked notebook results stay tracked.
+results/slurm-*
+results/diffusion_inversion/
