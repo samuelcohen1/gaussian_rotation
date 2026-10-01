@@ -1,6 +1,6 @@
-distribution,Gaussian Shading,rotation
-gaussian,0.221,0.1848
-laplace,0.191,0.1491
-mixture,0.1314,0.0711
-student_t,0.1779,0.1304
-uniform,0.2449,0.216
+distribution,Gaussian Shading,rotation,"threshold (alpha=0.5, encoded only)"
+gaussian,0.221,0.1848,0.1425
+laplace,0.191,0.1491,0.1158
+mixture,0.1314,0.0711,0.0523
+student_t,0.1779,0.1304,0.0986
+uniform,0.2449,0.216,0.1673
