@@ -50,6 +50,8 @@ sbatch scripts/run_geometric_registration.slurm
 
 Results land in `results/geometric_registration/run_001/correlations.csv`, with `metadata.json` and a few example images beside it. After copying that directory back, open `geometric_registration_analysis.ipynb`.
 
+To run the same experiment inside an interactive HiPerGator Jupyter session, open `geometric_registration_interactive.ipynb` from this repo on a one-GPU notebook session. That notebook writes to `results/geometric_registration/interactive`, so it does not share files with the Slurm job.
+
 ### 5. After completion, inspect the output directory
 
 For the default `OUTPUT_DIR`, the four files are:
