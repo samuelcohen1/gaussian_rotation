@@ -18,3 +18,4 @@ hpg.local.env
 # Slurm logs and diffusion-job outputs. Tracked notebook results stay tracked.
 results/slurm-*
 results/diffusion_inversion/
+results/geometric_registration/

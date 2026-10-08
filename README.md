@@ -40,6 +40,16 @@ squeue -u $USER
 
 Logs are `results/slurm-diffusion-<JOBID>.out` and `results/slurm-diffusion-<JOBID>.err`.
 
+### Geometric perturbation experiment
+
+This job reuses the same model, `.conda-env`, and one-GPU Slurm settings. For each sample it generates one image, then inverts that image once with no transform and once after each shift or rotation. The saved score is the Pearson correlation of the unsigned latent magnitudes. Edit `NUM_SAMPLES`, `SEED`, and `OUTPUT_DIR` at the top of `scripts/run_geometric_registration.slurm`.
+
+```bash
+sbatch scripts/run_geometric_registration.slurm
+```
+
+Results land in `results/geometric_registration/run_001/correlations.csv`, with `metadata.json` and a few example images beside it. After copying that directory back, open `geometric_registration_analysis.ipynb`.
+
 ### 5. After completion, inspect the output directory
 
 For the default `OUTPUT_DIR`, the four files are:
