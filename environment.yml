@@ -16,3 +16,4 @@ dependencies:
       - accelerate
       - safetensors
       - pillow
+      - ipykernel
