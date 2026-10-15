@@ -38,6 +38,33 @@ def selected_step_indices(num_steps: int) -> list[int]:
     return [0, num_steps // 2, num_steps - 1]
 
 
+def undo_image_transform(
+    latent: np.ndarray,
+    kind: str,
+    magnitude: float,
+    vae_scale_factor: int,
+) -> np.ndarray:
+    """Apply the opposite of an image-space shift or rotation on a latent.
+
+    A right or down image shift is undone by a left or up latent shift of
+    ``magnitude / vae_scale_factor`` pixels. A counterclockwise image rotation
+    is undone by a clockwise latent rotation of the same angle. Baseline is
+    copied. Accepts ``(C, H, W)`` or ``(1, C, H, W)`` and returns the same rank.
+    """
+    batched = np.asarray(latent).ndim == 4
+    spatial = np.asarray(latent)[0] if batched else np.asarray(latent)
+    if kind == "baseline":
+        corrected = apply_latent_transform(spatial, "baseline", 0.0, vae_scale_factor)
+    elif kind in {"horizontal_translation", "vertical_translation", "rotation"}:
+        corrected = apply_latent_transform(spatial, kind, -float(magnitude), vae_scale_factor)
+    else:
+        raise ValueError(f"unknown transformation: {kind}")
+    corrected = corrected.astype(np.float32, copy=False)
+    if batched:
+        return corrected[None]
+    return corrected
+
+
 def apply_latent_transform(
     latent: np.ndarray,
     kind: str,

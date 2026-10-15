@@ -54,6 +54,8 @@ To run the same experiment inside an interactive HiPerGator Jupyter session, ope
 
 `geometric_latent_trajectory.ipynb` is a separate one-image notebook. It inverts an image, a 16 px translation, and a 15° rotation, saves every inverse step, and plots the latent trajectory. Run it with the `gaussian-rotation` kernel. Outputs go to `results/latent_trajectory/example_001` and are gitignored.
 
+`geometric_latent_undo.ipynb` repeats the registration conditions for the first 5 of those 100 images, saves both latents, and undoes the shift or rotation on the inverted latent. Run it with the `gaussian-rotation` kernel on a one-GPU notebook session. Outputs go to `results/geometric_registration/latent_undo_n5` and are gitignored.
+
 ### 5. After completion, inspect the output directory
 
 For the default `OUTPUT_DIR`, the four files are:
