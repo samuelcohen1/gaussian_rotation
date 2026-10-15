@@ -19,3 +19,4 @@ hpg.local.env
 results/slurm-*
 results/diffusion_inversion/
 results/geometric_registration/
+results/latent_trajectory/

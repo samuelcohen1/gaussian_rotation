@@ -52,6 +52,8 @@ Results land in `results/geometric_registration/run_001/correlations.csv`, with 
 
 To run the same experiment inside an interactive HiPerGator Jupyter session, open `geometric_registration_interactive.ipynb` from this repo on a one-GPU notebook session. That notebook writes to `results/geometric_registration/interactive`, so it does not share files with the Slurm job.
 
+`geometric_latent_trajectory.ipynb` is a separate one-image notebook. It inverts an image, a 16 px translation, and a 15° rotation, saves every inverse step, and plots the latent trajectory. Run it with the `gaussian-rotation` kernel. Outputs go to `results/latent_trajectory/example_001` and are gitignored.
+
 ### 5. After completion, inspect the output directory
 
 For the default `OUTPUT_DIR`, the four files are:
