@@ -1,0 +1,88 @@
+{
+  "seed": 42,
+  "num_samples": 5,
+  "sample_seeds": [
+    191664963,
+    1662057957,
+    1405681631,
+    942484272,
+    929893137
+  ],
+  "samples_complete": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "model_id": "runwayml/stable-diffusion-v1-5",
+  "image_size": 512,
+  "vae_scale_factor": 8,
+  "num_inference_steps": 50,
+  "guidance_scale": 7.5,
+  "prompt": "a photograph of an astronaut riding a horse",
+  "dtype": "float16",
+  "conditions": [
+    {
+      "name": "baseline",
+      "params": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rotation_10",
+      "params": [
+        10.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "hshift_10",
+      "params": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        10.0,
+        0.0
+      ]
+    },
+    {
+      "name": "vshift_10",
+      "params": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        10.0
+      ]
+    },
+    {
+      "name": "combined_mild",
+      "params": [
+        8.0,
+        1.05,
+        0.98,
+        0.05,
+        6.0,
+        -4.0
+      ]
+    }
+  ],
+  "git_commit": "91740cb999865430d5f4a36ac9ce0d63d718fe66",
+  "note": "pixel affine then DDIM invert; sign-template registration in later cells",
+  "registration": "sign-only bits of baseline z_hat vs full condition z_hat; random 0/1 control",
+  "expected_latent_map": "same linear params; translation_px / vae_scale_factor",
+  "n_samples_registered": 5,
+  "trial_rows": 25
+}
