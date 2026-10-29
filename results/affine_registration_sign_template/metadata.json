@@ -1,0 +1,36 @@
+{
+  "seed": 42,
+  "image_size": 64,
+  "n_trials": 100,
+  "noise_levels": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "template_access": "sign-only 0/1 bits from original image",
+  "observation_access": "full grayscale affine-warped image plus noise",
+  "optimizer": "maximize corr(warp(B_pm), Y); coarse angle/translation + L-BFGS-B; DE if no gain over identity",
+  "parameterization": "angle_deg, scale_x, scale_y, shear, tx, ty",
+  "bounds": {
+    "angle_deg": [
+      -15.0,
+      15.0
+    ],
+    "scale": [
+      0.9,
+      1.1
+    ],
+    "shear": [
+      -0.1,
+      0.1
+    ],
+    "translation_px": [
+      -3.0,
+      3.0
+    ]
+  },
+  "random_control": "independent sign field registered to the same observation",
+  "valid_pixels": 1304
+}

@@ -11,10 +11,9 @@ Dates are the day each notebook was added. Local notebooks only read saved files
 | `gaussian_shading_vs_rotation.ipynb` | 2026-09-25 | Local | Compares Gaussian Shading, percentile-rotation, and threshold/skip decoding under synthetic latent noise. A later section repeats those decoders on one real inversion pair. |
 | `geometric_registration_analysis.ipynb` | 2026-10-08 | Local | Reads the 100-image Slurm run and plots `pearsonr(\|z\|, \|z_hat\|)` against shift and rotation size. It does not generate or invert. |
 | `geometric_registration_interactive.ipynb` | 2026-10-08 | HiPerGator | Runs that same 100-image, 13-condition experiment inside Jupyter, then plots it. Writes `results/geometric_registration/interactive`. |
-| `geometric_registration_quick.ipynb` | 2026-10-08 | HiPerGator | Shorter run: 10 images and horizontal shifts of 0, 1, 10, and 100 px. Writes `results/geometric_registration/quick_horizontal`. |
 | `geometric_latent_trajectory.ipynb` | 2026-10-15 | HiPerGator | One image, a 16 px shift, and a 15° rotation. Saves every inversion step and plots latent channels, differences, decodes, a shared PCA, and equivariance error. |
 | `geometric_latent_undo.ipynb` | 2026-10-15 | HiPerGator | Regenerates the first 5 images from the 100-image run, saves `z` and every inverted `z_hat`, and compares correlation before and after undoing the shift or rotation in latent space. |
-| `geometric_latent_undo_sweep.ipynb` | 2026-10-15 | Local | Uses those five saved latent pairs. For each true perturbation, tries many hypothesized undo amounts and plots correlation, with a star at the true amount. |
+| `geometric_latent_undo_sweep.ipynb` | 2026-10-15 | Local or HiPerGator | Uses those five saved latent pairs. For each true perturbation, tries many hypothesized undo amounts and plots magnitude correlation and sign-bit accuracy, with a star at the true amount. |
 
 ## Diffusion generation and inversion on HiPerGator
 

@@ -1,0 +1,8 @@
+{
+  "source_run": "results\\geometric_registration\\latent_undo_n5",
+  "n_samples": 5,
+  "vae_scale_factor": 8,
+  "registration": "shared affine on all 4 latent channels; template=baseline z_hat; observation=condition z_hat",
+  "scores": "full-latent Pearson correlation and RMSE (signed values, all coordinates)",
+  "expected_transform": "horizontal/vertical: translation magnitude/8; rotation: same angle; scale=1 shear=0"
+}

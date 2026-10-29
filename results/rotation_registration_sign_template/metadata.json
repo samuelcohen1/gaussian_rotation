@@ -1,0 +1,21 @@
+{
+  "seed": 42,
+  "image_size": 64,
+  "n_trials": 100,
+  "noise_levels": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "angle_bounds_deg": [
+    -30.0,
+    30.0
+  ],
+  "template_access": "sign-only 0/1 bits from original image; exact zero -> 1",
+  "observation_access": "full grayscale rotated image plus noise",
+  "optimizer": "maximize corr(B_pm, R_{-phi}(Y)) with coarse grid + bounded Brent",
+  "random_control": "independent sign field registered to the same observation",
+  "valid_pixels": 3124
+}

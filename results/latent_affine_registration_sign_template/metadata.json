@@ -1,0 +1,11 @@
+{
+  "source_run": "results\\geometric_registration\\latent_undo_n5",
+  "n_samples": 2,
+  "max_samples_cap": 2,
+  "vae_scale_factor": 8,
+  "template_access": "sign-only 0/1 bits from baseline z_hat",
+  "observation_access": "full signed condition z_hat",
+  "optimizer": "maximize multi-channel corr(warp(B_pm), Y); coarse grids + L-BFGS-B; no DE",
+  "random_control": "independent 0/1 field per sample, same shape as latent",
+  "expected_transform": "horizontal/vertical: translation magnitude/8; rotation: same angle; scale=1 shear=0"
+}

@@ -1,0 +1,38 @@
+{
+  "seed": 42,
+  "image_size": 64,
+  "n_trials": 100,
+  "noise_levels": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "parameterization": "angle_deg, scale_x, scale_y, shear, tx, ty with A = R @ [[sx, sx*shear], [0, sy]]",
+  "bounds": {
+    "angle_deg": [
+      -15.0,
+      15.0
+    ],
+    "scale": [
+      0.9,
+      1.1
+    ],
+    "shear": [
+      -0.1,
+      0.1
+    ],
+    "translation_px": [
+      -3.0,
+      3.0
+    ]
+  },
+  "interpolation": "scipy.ndimage.affine_transform bilinear",
+  "optimizer": "coarse SSD grid over angle/translation + scipy.optimize.least_squares; differential_evolution fallback",
+  "valid_mask": "circular radius 0.32 * N",
+  "valid_pixels": 1304,
+  "rmse_fallback": 0.05,
+  "rmse_fallback_rule": "RMSE_FALLBACK if sigma==0 else 1.1*sigma + RMSE_FALLBACK",
+  "opencv_ecc": "investigated; unreliable on white-noise templates; not used"
+}

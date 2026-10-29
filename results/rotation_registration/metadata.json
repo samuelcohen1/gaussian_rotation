@@ -1,0 +1,31 @@
+{
+  "seed": 42,
+  "image_size": 64,
+  "angle_bounds_deg": [
+    -30.0,
+    30.0
+  ],
+  "noise_levels": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "n_trials": 100,
+  "coarse_step_deg": 1.0,
+  "rotate_order": 1,
+  "interpolation": "scipy.ndimage.rotate bilinear",
+  "optimizer": "coarse grid + scipy.optimize.minimize_scalar bounded Brent",
+  "objective": "SSD on fixed valid-pixel mask",
+  "valid_pixels": 3124,
+  "valid_fraction": 0.7626953125,
+  "timing_sizes": [
+    32,
+    64,
+    128,
+    256
+  ],
+  "timing_trials": 20,
+  "timing_noise": 0.25
+}
