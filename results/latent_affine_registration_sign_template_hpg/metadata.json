@@ -1,8 +1,8 @@
 {
-  "source_run": "results\\geometric_registration\\latent_undo_n5",
-  "n_samples": 1,
-  "max_samples_cap": 1,
-  "n_jobs": 2,
+  "source_run": "results/geometric_registration/latent_undo_n5",
+  "n_samples": 5,
+  "max_samples_cap": null,
+  "n_jobs": 1,
   "parallelism": "ThreadPoolExecutor over (sample, condition); OMP/MKL threads=1",
   "vae_scale_factor": 8,
   "template_access": "sign-only 0/1 bits from baseline z_hat",
@@ -12,6 +12,6 @@
   "coarse_translation_step": 0.5,
   "random_control": "independent 0/1 field per sample, same shape as latent",
   "expected_transform": "horizontal/vertical: translation magnitude/8; rotation: same angle; scale=1 shear=0",
-  "wall_time_s": 26.4410544000566,
-  "summed_registration_cpu_s": 52.18276639969554
+  "wall_time_s": 59.06448612801614,
+  "summed_registration_cpu_s": 58.81318291593925
 }
