@@ -1,0 +1,148 @@
+{
+  "seed": 42,
+  "num_samples": 5,
+  "num_random_affines": 4,
+  "sample_seeds": [
+    191664963,
+    1662057957,
+    1405681631,
+    942484272,
+    929893137
+  ],
+  "samples_complete": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "model_id": "runwayml/stable-diffusion-v1-5",
+  "image_size": 512,
+  "vae_scale_factor": 8,
+  "num_inference_steps": 50,
+  "guidance_scale": 7.5,
+  "prompt": "a photograph of an astronaut riding a horse",
+  "dtype": "float16",
+  "search_bounds_latent": {
+    "angle_deg": [
+      -20.0,
+      20.0
+    ],
+    "scale": [
+      0.85,
+      1.15
+    ],
+    "shear": [
+      -0.2,
+      0.2
+    ],
+    "translation": [
+      -4.0,
+      4.0
+    ]
+  },
+  "conditions": [
+    {
+      "name": "baseline",
+      "params_pixel": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "params_latent_expected": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "rand_00",
+      "params_pixel": [
+        -1.4927318078974565,
+        1.0232177742675201,
+        1.081266482337306,
+        0.1770483693257136,
+        22.954671769899917,
+        -24.429779909928
+      ],
+      "params_latent_expected": [
+        -1.4927318078974565,
+        1.0232177742675201,
+        1.081266482337306,
+        0.1770483693257136,
+        2.8693339712374897,
+        -3.053722488741
+      ]
+    },
+    {
+      "name": "rand_01",
+      "params_pixel": [
+        -15.487026159535633,
+        1.1452162465135767,
+        1.1492488823478935,
+        0.18305813075507843,
+        8.439194717792745,
+        31.93210105201944
+      ],
+      "params_latent_expected": [
+        -15.487026159535633,
+        1.1452162465135767,
+        1.1492488823478935,
+        0.18305813075507843,
+        1.054899339724093,
+        3.99151263150243
+      ]
+    },
+    {
+      "name": "rand_02",
+      "params_pixel": [
+        7.381241025709183,
+        1.0127973981315443,
+        1.0897754310395493,
+        0.14618954350330754,
+        0.7194845539423298,
+        -21.739789152680373
+      ],
+      "params_latent_expected": [
+        7.381241025709183,
+        1.0127973981315443,
+        1.0897754310395493,
+        0.14618954350330754,
+        0.08993556924279122,
+        -2.7174736440850467
+      ]
+    },
+    {
+      "name": "rand_03",
+      "params_pixel": [
+        7.737794432885753,
+        1.1479242923727906,
+        0.8884842681455786,
+        0.04445338298613674,
+        11.110572991099865,
+        -19.92651579140947
+      ],
+      "params_latent_expected": [
+        7.737794432885753,
+        1.1479242923727906,
+        0.8884842681455786,
+        0.04445338298613674,
+        1.388821623887483,
+        -2.490814473926184
+      ]
+    }
+  ],
+  "git_commit": "2ff76c0fcc1582a22386843fe1e0285d6cdeb980",
+  "note": "random pixel affines in search box, then DDIM invert; sign-template registration in later cells",
+  "registration": "sign-only bits of baseline z_hat vs full condition z_hat; random 0/1 control",
+  "expected_latent_map": "same linear params; translation_px / vae_scale_factor",
+  "perturbations": "uniform random affines inside latent search bounds; shared across samples",
+  "n_samples_registered": 5,
+  "trial_rows": 25
+}
